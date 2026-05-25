@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Digital Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>My Digital Library</h1>
+        <nav>
+            <a href="#">Library</a>
+            <a href="#">Blog</a>
+            <a href="#">About</a>
+        </nav>
+    </header>
+    
+    <main>
+        <div id="controls">
+            <button id="tile-view">Tile</button>
+            <button id="kanban-view">Kanban</button>
+        </div>
+    
+        <div id="library-container">
+            <!-- cards will go here -->
+            <div class="card">
+                <span class="card-type">Paper</span>
+                <h2 class="card-title">The Colonial Origins of Comparative Development</h2>
+                <p class="card-author">Acemoglu, Johnson & Robinson · 2001</p>
+                <p class="card-summary">Explores how settler mortality shaped institutional development and long-run economic growth across countries.</p>
+                <div class="card-tags">
+                    <span class="tag">#institutions</span>
+                    <span class="tag">#growth</span>
+                    <span class="tag">#history</span>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
