@@ -7,11 +7,13 @@ function closeModal() {
 }
 
 async function submitItem() {
+    if (!document.getElementById('title').value) return alert('Please enter a title');
+
     const data = {
     title: document.getElementById('title').value,
     author: document.getElementById('author').value,
     link: document.getElementById('link').value,
-    doi: document.getElementById('doi').value,
+    doi: document.getElementById('doi-or-link').value,
     type: document.getElementById('type').value,
     category: document.getElementById('category').value,
     tags: document.getElementById('tags').value,
@@ -29,13 +31,18 @@ async function submitItem() {
     }
 }
 
-async function fetchDOI() {
-    let doi = document.getElementById('doi').value.trim();
-    doi = doi.replace('https://doi.org/', '').replace('http://doi.org/', '').replace('doi.org/', '');
-    if (!doi) return alert('Please enter a DOI first');
+async function smartFetch(value) {
+    value = value.trim();
+    if (!value) return;
+    
+    // Clean DOI if full URL pasted
+    let doi = value.replace('https://doi.org/', '').replace('http://doi.org/', '').replace('doi.org/', '');
+    
+    // Only fetch if it looks like a DOI
+    if (!doi.startsWith('10.')) return;
     
     const response = await fetch(`https://api.crossref.org/works/${encodeURIComponent(doi)}`);
-    if (!response.ok) return alert('DOI not found');
+    if (!response.ok) return;
     
     const data = await response.json();
     const work = data.message;
@@ -79,7 +86,6 @@ async function loadItems(category = 'all') {
     filtered.forEach(item => {
         container.innerHTML += `
             <div class="card" onclick="window.open('${item.link}', '_blank')">
-                <span class="card-type">${item.type}</span>
                 <h2 class="card-title">${item.title}</h2>
                 <p class="card-author">${item.author}</p>
                 <p class="card-summary">${item.summary}</p>

@@ -17,7 +17,7 @@ def generate_summary(title, author):
         model="claude-haiku-4-5",
         max_tokens=75,
         messages=[
-            {"role": "user", "content": f"Summarize this academic work in exactly 2 crisp sentences. No markdown, no hashtags, plain text only '{title}' by {author}"}
+            {"role": "user", "content": f"Summarize the academic work titled '{title}' by {author} in exactly 2 crisp sentences. If you are not familiar with this work or cannot summarize it accurately, respond with exactly: 'Summary unavailable — please add manually.'"}
         ]
     )
     return message.content[0].text
@@ -38,6 +38,7 @@ def add_item():
         return jsonify({'success': False, 'error': 'Item already exists in your library'})
     
     summary = generate_summary(data['title'], data['author'])
+    
 
     conn.execute('''
         INSERT INTO items (title, author, type, category, summary, link, doi, tags)
