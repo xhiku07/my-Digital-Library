@@ -8,14 +8,14 @@ function closeModal() {
 
 async function submitItem() {
     const data = {
-        title: document.getElementById('title').value,
-        author: document.getElementById('author').value,
-        link: document.getElementById('link').value,
-        type: document.getElementById('type').value,
-        category: document.getElementById('category').value,
-        tags: document.getElementById('tags').value,
-    };
-
+    title: document.getElementById('title').value,
+    author: document.getElementById('author').value,
+    link: document.getElementById('link').value,
+    doi: document.getElementById('doi').value,
+    type: document.getElementById('type').value,
+    category: document.getElementById('category').value,
+    tags: document.getElementById('tags').value,
+};
     const response = await fetch('/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -28,6 +28,23 @@ async function submitItem() {
         location.reload();
     }
 }
+
+async function fetchDOI() {
+    let doi = document.getElementById('doi').value.trim();
+    doi = doi.replace('https://doi.org/', '').replace('http://doi.org/', '').replace('doi.org/', '');
+    if (!doi) return alert('Please enter a DOI first');
+    
+    const response = await fetch(`https://api.crossref.org/works/${encodeURIComponent(doi)}`);
+    if (!response.ok) return alert('DOI not found');
+    
+    const data = await response.json();
+    const work = data.message;
+    
+    document.getElementById('title').value = work.title?.[0] || '';
+    document.getElementById('author').value = work.author?.map(a => `${a.given} ${a.family}`).join(', ') || '';
+    document.getElementById('type').value = 'Paper';
+}
+
 
 async function loadItems(category = 'all') {
     const response = await fetch('/items');

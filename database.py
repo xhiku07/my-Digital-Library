@@ -16,6 +16,10 @@ def init_db():
             category TEXT,
             summary TEXT,
             link TEXT,
+            doi TEXT,
+            isbn TEXT,
+            journal TEXT,
+            year TEXT,
             tags TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )

@@ -40,10 +40,10 @@ def add_item():
     summary = generate_summary(data['title'], data['author'])
 
     conn.execute('''
-        INSERT INTO items (title, author, type, category, summary, link, tags)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    ''', (data['title'], data['author'], data['type'], data['category'], summary, data['link'], data['tags']))
-    conn.commit()
+        INSERT INTO items (title, author, type, category, summary, link, doi, tags)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (data['title'], data['author'], data['type'], data['category'], summary, data['link'], data.get('doi', ''), data['tags']))
+    conn.commit()             
     conn.close()
     
     return jsonify({'success': True, 'summary': summary})
