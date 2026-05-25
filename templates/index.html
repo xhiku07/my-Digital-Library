@@ -20,23 +20,74 @@
         <div id="controls">
             <button id="tile-view">Tile</button>
             <button id="kanban-view">Kanban</button>
+            <button id="add-btn" onclick="openModal()">+ Add</button>
+            <select id="category-filter" onchange="filterItems(this.value)">
+            <option value="all">All Categories</option>
+            <option value="Development Economics">Development Economics</option>
+            <option value="Demography">Demography</option>
+            <option value="Political Economy">Political Economy</option>
+            <option value="Economic History">Economic History</option>
+            <option value="Philosophy">Philosophy</option>
+            <option value="Statistics & Methods">Statistics & Methods</option>
+            <option value="Sociology">Sociology</option>
+            <option value="Essays & Culture">Essays & Culture</option>
+            <option value="Psychology">Psychology</option>
+            <option value="Econometrics">Econometrics</option>
+            <option value="Experimental Economics">Experimental Economics</option>
+            <option value="Topological Data Analysis">Topological Data Analysis</option>
+            <option value="Film & Photography">Film & Photography</option>
+            <option value="Macroeconomics">Macroeconomics</option>
+            <option value="Applied Economics">Applied Economics</option>
+            <option value="Urban & Spatial Economics">Urban & Spatial Economics</option>
+            <option value="Personal Blog">Personal Blog</option>
+            </select>
         </div>
     
         <div id="library-container">
             <!-- cards will go here -->
-            <div class="card">
-                <span class="card-type">Paper</span>
-                <h2 class="card-title">The Colonial Origins of Comparative Development</h2>
-                <p class="card-author">Acemoglu, Johnson & Robinson · 2001</p>
-                <p class="card-summary">Explores how settler mortality shaped institutional development and long-run economic growth across countries.</p>
-                <div class="card-tags">
-                    <span class="tag">#institutions</span>
-                    <span class="tag">#growth</span>
-                    <span class="tag">#history</span>
-                </div>
-            </div>
         </div>
     </main>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <div id="modal" class="modal hidden">
+    <div class="modal-box">
+        <h2>Add to Library</h2>
+        <input type="text" id="title" placeholder="Title" />
+        <input type="text" id="author" placeholder="Author" />
+        <input type="text" id="link" placeholder="Link (optional)" />
+        <select id="type">
+            <option value="Paper">Paper</option>
+            <option value="Book">Book</option>
+            <option value="Essay">Essay</option>
+            <option value="Blog">Blog</option>
+            <option value="Journal">Journal</option>
+        </select>
+        <select id="category">
+    <option value="">Select Category</option>
+    <option value="Development Economics">Development Economics</option>
+    <option value="Demography">Demography</option>
+    <option value="Political Economy">Political Economy</option>
+    <option value="Economic History">Economic History</option>
+    <option value="Philosophy">Philosophy</option>
+    <option value="Statistics & Methods">Statistics & Methods</option>
+    <option value="Sociology">Sociology</option>
+    <option value="Essays & Culture">Essays & Culture</option>
+    <option value="Psychology">Psychology</option>
+    <option value="Econometrics">Econometrics</option>
+    <option value="Experimental Economics">Experimental Economics</option>
+    <option value="Topological Data Analysis">Topological Data Analysis</option>
+    <option value="Film & Photography">Film & Photography</option>
+    <option value="Macroeconomics">Macroeconomics</option>
+    <option value="Applied Economics">Applied Economics</option> 
+    <option value="Urban & Spatial Economics">Urban & Spatial Economics</option>
+    <option value="Personal Blog">Personal Blog</option>
+</select>
+        <input type="text" id="tags" placeholder="Tags (e.g. #growth #price)" />
+        <div class="modal-buttons">
+            <button onclick="closeModal()">Cancel</button>
+            <button class="btn-submit" onclick="submitItem()">Add & Summarise</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
