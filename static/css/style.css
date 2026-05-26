@@ -358,8 +358,8 @@ main {
     font-size: 0.9rem;
     color: #1a1a1a;
     outline: none;
-    resize: vertical;
-    min-height: 80px;
+    resize: verical;
+}
 
 .modal-box textarea:focus {
     border-color: #c084b0;
