@@ -278,16 +278,19 @@ main {
 }
 
 .category-toggle {
-    padding: 0.75rem 1rem;
-    border: 1px solid #f0e6f0;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    color: #aaa;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid #f0c4e8;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #c084b0;
+    background: #fdf0f8;
     cursor: pointer;
+    transition: all 0.2s;
 }
 
 .category-toggle:hover {
-    border-color: #c084b0;
+    background: #c084b0;
+    color: white;
 }
 
 .category-options {
