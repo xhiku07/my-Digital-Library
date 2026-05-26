@@ -6,6 +6,19 @@ function closeModal() {
     document.getElementById('modal').classList.add('hidden');
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('category-toggle').addEventListener('click', function(e) {
+        e.stopPropagation();
+        document.getElementById('category-options').classList.toggle('hidden');
+    });
+});
+
+function updateCategoryToggle() {
+    const checked = Array.from(document.querySelectorAll('#category-options input:checked')).map(cb => cb.value);
+    const toggle = document.getElementById('category-toggle');
+    toggle.textContent = checked.length > 0 ? checked.join(', ') : 'Select Categories ▾';
+}
+
 async function submitItem() {
     if (!document.getElementById('title').value) return alert('Please enter a title');
 
@@ -15,7 +28,7 @@ async function submitItem() {
     link: document.getElementById('link').value,
     doi: document.getElementById('doi-or-link').value,
     type: document.getElementById('type').value,
-    category: document.getElementById('category').value,
+    category: Array.from(document.querySelectorAll('#category-options input:checked')).map(cb => cb.value).join(', '),
     tags: document.getElementById('tags').value,
 };
     const response = await fetch('/add', {
@@ -60,15 +73,15 @@ async function loadItems(category = 'all') {
     const container = document.getElementById('library-container');
     const isKanban = container.className === 'kanban';
     container.innerHTML = '';
-    const filtered = category === 'all' ? items : items.filter(item => item.category === category);
+    const filtered = category === 'all' ? items : items.filter(item => item.category.includes(category));
     
   if (isKanban) {
-    const categories = [...new Set(items.map(item => item.category))];
+    const categories = [...new Set(items.map(item => item.type))];
     categories.forEach(category => {
-        const column = document.createElement('div');
-        column.className = 'kanban-column';
-        column.innerHTML = `<div class="kanban-column-title">${category}</div>`;
-        items.filter(item => item.category === category).forEach(item => {
+    const column = document.createElement('div');
+    column.className = 'kanban-column';
+    column.innerHTML = `<div class="kanban-column-title">${category}</div>`;
+    items.filter(item => item.type === category).forEach(item => {
             column.innerHTML += `
                 <div class="card" onclick="window.open('${item.link}', '_blank')">
                     <span class="card-type">${item.type}</span>
@@ -116,4 +129,12 @@ document.getElementById('kanban-view').addEventListener('click', () => {
     document.getElementById('kanban-view').classList.add('active');
     loadItems();
     document.getElementById('category-filter').style.display = 'none';
+});
+
+document.addEventListener('click', function(e) {
+    const options = document.getElementById('category-options');
+    const toggle = document.getElementById('category-toggle');
+    if (!options.contains(e.target) && !toggle.contains(e.target)) {
+        options.classList.add('hidden');
+    }
 });

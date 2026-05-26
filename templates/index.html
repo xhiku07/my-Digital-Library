@@ -60,27 +60,30 @@
             <option value="Paper">Paper</option>
             <option value="Book">Book</option>
             <option value="Essay">Essay</option>
-    <       <option value="Blog">Blog</option>
-    <select id="category">
-    <option value="">Select Category</option>
-    <option value="Development Economics">Development Economics</option>
-    <option value="Demography">Demography</option>
-    <option value="Political Economy">Political Economy</option>
-    <option value="Economic History">Economic History</option>
-    <option value="Philosophy">Philosophy</option>
-    <option value="Statistics & Methods">Statistics & Methods</option>
-    <option value="Sociology">Sociology</option>
-    <option value="Essays & Culture">Essays & Culture</option>
-    <option value="Psychology">Psychology</option>
-    <option value="Econometrics">Econometrics</option>
-    <option value="Experimental Economics">Experimental Economics</option>
-    <option value="Topological Data Analysis">Topological Data Analysis</option>
-    <option value="Film & Photography">Film & Photography</option>
-    <option value="Macroeconomics">Macroeconomics</option>
-    <option value="Applied Economics">Applied Economics</option> 
-    <option value="Urban & Spatial Economics">Urban & Spatial Economics</option>
-    <option value="Personal Blog">Personal Blog</option>
+            <option value="Blog">Blog</option>
         </select>
+        <div class="category-dropdown">
+            <div class="category-toggle" id="category-toggle" tabindex="0">Select Categories ▾</div>
+            <div class="category-options hidden" id="category-options">
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Development Economics" > Development Economics</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Demography"> Demography</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Political Economy"> Political Economy</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Economic History"> Economic History</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Philosophy"> Philosophy</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Statistics & Methods"> Statistics & Methods</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Sociology"> Sociology</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Essays & Culture"> Essays & Culture</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Psychology"> Psychology</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Econometrics"> Econometrics</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Experimental Economics"> Experimental Economics</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Topological Data Analysis"> Topological Data Analysis</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Film & Photography"> Film & Photography</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Macroeconomics"> Macroeconomics</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Applied Economics"> Applied Economics</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Urban & Spatial Economics"> Urban & Spatial Economics</label>
+                <label><input type="checkbox" onchange="updateCategoryToggle()" value="Personal Blog"> Personal Blog</label>
+            </div>
+        </div>
         <input type="text" id="tags" placeholder="Tags (e.g. #growth #price)" />
         <div class="modal-buttons">
             <button onclick="closeModal()">Cancel</button>
