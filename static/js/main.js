@@ -19,19 +19,46 @@ function updateCategoryToggle() {
     toggle.textContent = checked.length > 0 ? checked.join(', ') : 'Select Categories ▾';
 }
 
+function openEdit(id) {
+    fetch('/items')
+        .then(r => r.json())
+        .then(items => {
+            const item = items.find(i => i.id === id);
+            document.getElementById('title').value = item.title;
+            document.getElementById('author').value = item.author;
+            document.getElementById('link').value = item.link;
+            document.getElementById('doi-or-link').value = item.doi;
+            document.getElementById('type').value = item.type;
+            document.getElementById('tags').value = item.tags;
+            document.getElementById('summary').value = item.summary;
+            document.querySelectorAll('#category-options input').forEach(cb => cb.checked = false);
+            item.category.split(', ').forEach(cat => {
+            const cb = document.querySelector(`#category-options input[value="${cat.trim()}"]`);
+            if (cb) cb.checked = true;
+            });
+            updateCategoryToggle();
+            document.getElementById('modal').dataset.editId = id;
+            document.getElementById('modal').classList.remove('hidden');
+        });
+}
+
 async function submitItem() {
     if (!document.getElementById('title').value) return alert('Please enter a title');
-
+    
+    const editId = document.getElementById('modal').dataset.editId;
     const data = {
-    title: document.getElementById('title').value,
-    author: document.getElementById('author').value,
-    link: document.getElementById('link').value,
-    doi: document.getElementById('doi-or-link').value,
-    type: document.getElementById('type').value,
-    category: Array.from(document.querySelectorAll('#category-options input:checked')).map(cb => cb.value).join(', '),
-    tags: document.getElementById('tags').value,
-};
-    const response = await fetch('/add', {
+        title: document.getElementById('title').value,
+        author: document.getElementById('author').value,
+        link: document.getElementById('link').value,
+        doi: document.getElementById('doi-or-link').value,
+        type: document.getElementById('type').value,
+        category: Array.from(document.querySelectorAll('#category-options input:checked')).map(cb => cb.value).join(', '),
+        tags: document.getElementById('tags').value,
+        summary: document.getElementById('summary').value,
+    };
+
+    const url = editId ? `/update/${editId}` : '/add';
+    const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -39,8 +66,9 @@ async function submitItem() {
 
     const result = await response.json();
     if (result.success) {
-        closeModal();
-        location.reload();
+        document.getElementById('modal').dataset.editId = '';
+        closeModal();d
+        loadItems();
     }
 }
 
@@ -91,6 +119,9 @@ async function loadItems(category = 'all') {
                     <div class="card-tags">
                         ${item.tags.split(' ').filter(tag => tag.trim() !== '').map(tag => `<span class="tag">${tag}</span>`).join('')}
                     </div>
+                    <div class="card-footer"> 
+                        <button class="edit-btn" onclick="event.stopPropagation(); openEdit(${item.id})">Edit</button>
+                    </div>
                 </div>`;
         });
         container.appendChild(column);
@@ -99,11 +130,15 @@ async function loadItems(category = 'all') {
     filtered.forEach(item => {
         container.innerHTML += `
             <div class="card" onclick="window.open('${item.link}', '_blank')">
+                <span class="card-type">${item.type}</span>
                 <h2 class="card-title">${item.title}</h2>
                 <p class="card-author">${item.author}</p>
                 <p class="card-summary">${item.summary}</p>
                 <div class="card-tags">
                     ${item.tags.split(' ').filter(tag => tag.trim() !== '').map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+                <div class="card-footer">
+                    <button class="edit-btn" onclick="event.stopPropagation(); openEdit(${item.id})">Edit</button>
                 </div>
             </div>`;
     });

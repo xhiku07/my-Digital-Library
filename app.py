@@ -17,7 +17,7 @@ def generate_summary(title, author):
         model="claude-haiku-4-5",
         max_tokens=75,
         messages=[
-            {"role": "user", "content": f"Summarize the academic work titled '{title}' by {author} in exactly 2 crisp sentences. If you are not familiar with this work or cannot summarize it accurately, respond with exactly: 'Summary unavailable — please add manually.'"}
+            {"role": "user", "content": f"Summarize the academic work titled '{title}' by {author} in exactly 2 crisp sentences. No markdown, no hashtags, no headers, plain text only. If unfamiliar, respond: 'Summary unavailable — please add manually.'"}
         ]
     )
     return message.content[0].text
@@ -37,7 +37,10 @@ def add_item():
         conn.close()
         return jsonify({'success': False, 'error': 'Item already exists in your library'})
     
-    summary = generate_summary(data['title'], data['author'])
+    if data.get('summary'):
+        summary = data['summary']
+    else:
+        summary = generate_summary(data['title'], data['author'])
     
 
     conn.execute('''
@@ -48,6 +51,18 @@ def add_item():
     conn.close()
     
     return jsonify({'success': True, 'summary': summary})
+
+@app.route('/update/<int:item_id>', methods=['POST'])
+def update_item(item_id):
+    data = request.json
+    conn = get_db()
+    conn.execute('''
+           UPDATE items SET title=?, author=?, type=?, category=?, summary=?, link=?, doi=?, tags=?
+    WHERE id=?
+''', (data['title'], data['author'], data['type'], data['category'], data.get('summary', ''), data['link'], data.get('doi', ''), data['tags'], item_id))
+    conn.commit()
+    conn.close()
+    return jsonify({'success': True})
 
 @app.route('/items')
 def get_items():
