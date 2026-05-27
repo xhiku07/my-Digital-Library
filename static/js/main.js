@@ -6,6 +6,14 @@ function closeModal() {
     document.getElementById('modal').classList.add('hidden');
 }
 
+
+function toggleTheme() {
+    document.body.classList.toggle('dark');
+    const btn = document.getElementById('theme-toggle');
+    btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('category-toggle').addEventListener('click', function(e) {
         e.stopPropagation();
@@ -108,11 +116,11 @@ async function loadItems(category = 'all') {
     categories.forEach(category => {
     const column = document.createElement('div');
     column.className = 'kanban-column';
-    column.innerHTML = `<div class="kanban-column-title">${category}</div>`;
+    column.innerHTML = `<div class="kanban-column-title kanban-type-${category.toLowerCase()}">${category}</div>`;
     items.filter(item => item.type === category).forEach(item => {
             column.innerHTML += `
                 <div class="card" onclick="window.open('${item.link}', '_blank')">
-                    <span class="card-type">${item.type}</span>
+                    <span class="card-type card-type-${item.type.toLowerCase()}">${item.type}</span>
                     <h2 class="card-title">${item.title}</h2>
                     <p class="card-author">${item.author}</p>
                     <p class="card-summary">${item.summary}</p>
@@ -130,7 +138,7 @@ async function loadItems(category = 'all') {
     filtered.forEach(item => {
         container.innerHTML += `
             <div class="card" onclick="window.open('${item.link}', '_blank')">
-                <span class="card-type">${item.type}</span>
+                <span class="card-type card-type-${item.type.toLowerCase()}">${item.type}</span>
                 <h2 class="card-title">${item.title}</h2>
                 <p class="card-author">${item.author}</p>
                 <p class="card-summary">${item.summary}</p>
@@ -173,3 +181,4 @@ document.addEventListener('click', function(e) {
         options.classList.add('hidden');
     }
 });
+
