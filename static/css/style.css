@@ -37,7 +37,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 4rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: none;
     background: var(--bg);
     position: sticky;
     top: 0;
@@ -179,11 +179,11 @@ main {
 }
 
 .card-year {
-    color: var(--text-tertiary);
     font-size: 0.8rem;
     font-weight: 700;
     color: #1a1a2e;
 }
+
 .card-summary {
     font-size: 0.85rem;
     color: var(--text-secondary);
