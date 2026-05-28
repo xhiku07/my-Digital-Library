@@ -182,7 +182,7 @@ main {
     color: var(--text-tertiary);
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--text-primary)
+    color: #1a1a2e;
 }
 .card-summary {
     font-size: 0.85rem;
