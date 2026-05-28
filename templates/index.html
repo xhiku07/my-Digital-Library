@@ -95,6 +95,7 @@
         <input type="text" id="author" placeholder="Author" />
         <input type="text" id="link" placeholder="Link (optional)" />
         <input type="text" id="doi-or-link" placeholder="DOI (optional — auto-fills title & author)" onblur="smartFetch(this.value)" />
+        <input type="text" id="isbn" placeholder="ISBN (optional — auto-fills title & author)" onblur="fetchISBN(this.value)" />
         <select id="type">
             <option value="Paper">Paper</option>
             <option value="Book">Book</option>
