@@ -68,10 +68,10 @@ def add_item():
     
 
     conn.execute('''
-        INSERT INTO items (title, author, type, category, summary, link, doi, tags)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (data['title'], data['author'], data['type'], data['category'], summary, data['link'], data.get('doi', ''), data['tags']))
-    conn.commit()             
+        INSERT INTO items (title, author, type, category, summary, link, doi, tags, year)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (data['title'], data['author'], data['type'], data['category'], summary, data['link'], data.get('doi', ''), data['tags'], data.get('year', '')))
+    conn.commit()
     conn.close()
     
     return jsonify({'success': True, 'summary': summary})
@@ -82,9 +82,9 @@ def update_item(item_id):
     data = request.json
     conn = get_db()
     conn.execute('''
-           UPDATE items SET title=?, author=?, type=?, category=?, summary=?, link=?, doi=?, tags=?
-    WHERE id=?
-''', (data['title'], data['author'], data['type'], data['category'], data.get('summary', ''), data['link'], data.get('doi', ''), data['tags'], item_id))
+        UPDATE items SET title=?, author=?, type=?, category=?, summary=?, link=?, doi=?, tags=?, year=?
+        WHERE id=?
+    ''', (data['title'], data['author'], data['type'], data['category'], data.get('summary', ''), data['link'], data.get('doi', ''), data['tags'], data.get('year', ''), item_id))
     conn.commit()
     conn.close()
     return jsonify({'success': True})

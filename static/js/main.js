@@ -56,7 +56,22 @@ function openModal() {
     document.getElementById('modal').classList.remove('hidden');
 }
 
+function resetModal() {
+    document.getElementById('title').value = '';
+    document.getElementById('author').value = '';
+    document.getElementById('link').value = '';
+    document.getElementById('doi-or-link').value = '';
+    document.getElementById('isbn').value = '';
+    document.getElementById('year').value = '';
+    document.getElementById('tags').value = '';
+    document.getElementById('summary').value = '';
+    document.querySelectorAll('#category-options input').forEach(cb => cb.checked = false);
+    updateCategoryToggle();
+    document.getElementById('modal').dataset.editId = '';
+}
+
 function closeModal() {
+    resetModal();
     document.getElementById('modal').classList.add('hidden');
 }
 
@@ -92,6 +107,7 @@ function openEdit(id) {
             document.getElementById('doi-or-link').value = item.doi;
             document.getElementById('type').value = item.type;
             document.getElementById('tags').value = item.tags;
+            document.getElementById('year').value = item.year || '';
             document.getElementById('summary').value = item.summary;
             document.querySelectorAll('#category-options input').forEach(cb => cb.checked = false);
             item.category.split(', ').forEach(cat => {
