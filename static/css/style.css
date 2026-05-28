@@ -174,11 +174,14 @@ main {
 }
 
 .card-author {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
 }
 
+.card-year {
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+}
 .card-summary {
     font-size: 0.85rem;
     color: var(--text-secondary);

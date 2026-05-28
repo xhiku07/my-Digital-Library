@@ -116,6 +116,7 @@ async function submitItem() {
         type: document.getElementById('type').value,
         category: Array.from(document.querySelectorAll('#category-options input:checked')).map(cb => cb.value).join(', '),
         tags: document.getElementById('tags').value,
+        year: document.getElementById('year').value,
         summary: document.getElementById('summary').value,
     };
 
@@ -153,6 +154,7 @@ async function smartFetch(value) {
     
     document.getElementById('title').value = work.title?.[0] || '';
     document.getElementById('author').value = work.author?.map(a => `${a.given} ${a.family}`).join(', ') || '';
+    document.getElementById('year').value = work['published-print']?.['date-parts']?.[0]?.[0] || work['published-online']?.['date-parts']?.[0]?.[0] || '';
     document.getElementById('type').value = 'Paper';
 }
 
@@ -190,7 +192,7 @@ async function loadItems(category = 'all') {
                 <div class="card" onclick="window.open('${item.link}', '_blank')">
                     <span class="card-type card-type-${item.type.toLowerCase()}">${item.type}</span>
                     <h2 class="card-title">${item.title}</h2>
-                    <p class="card-author">${item.author}</p>
+                    <p class="card-author">${item.author} ${item.year ? `<span class="card-year">${item.year}</span>` : ''}</p>
                     <p class="card-summary">${item.summary}</p>
                     <div class="card-tags">
                          ${item.tags.split(' ').filter(tag => tag.trim() !== '').map(tag => `<span class="tag">${tag}</span>`).join('')}
@@ -208,7 +210,7 @@ async function loadItems(category = 'all') {
             <div class="card" onclick="window.open('${item.link}', '_blank')">
                 <span class="card-type card-type-${item.type.toLowerCase()}">${item.type}</span>
                 <h2 class="card-title">${item.title}</h2>
-                <p class="card-author">${item.author}</p>
+                <p class="card-author">${item.author} ${item.year ? `<span class="card-year">${item.year}</span>` : ''}</p>
                 <p class="card-summary">${item.summary}</p>
                 <div class="card-tags">
                 ${item.tags.split(' ').filter(tag => tag.trim() !== '').map(tag => `<span class="tag">${tag}</span>`).join('')}
