@@ -449,10 +449,14 @@ main {
 }
 
 footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     text-align: center;
-    padding: 2rem;
+    padding: 1rem;
     color: var(--text-tertiary);
     font-size: 0.8rem;
+    background: var(--bg);
     border-top: 1px solid var(--border);
 }
 
