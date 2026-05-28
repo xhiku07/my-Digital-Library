@@ -105,5 +105,16 @@ def get_items():
     conn.close()
     return jsonify([dict(item) for item in items])
 
+@app.route('/migrate')
+def migrate():
+    if os.path.exists('backup.sql'):
+        conn = get_db()
+        with open('backup.sql', 'r') as f:
+            conn.executescript(f.read())
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True})
+    return jsonify({'success': False, 'error': 'No backup.sql found'})
+
 if __name__ == '__main__':
     app.run(debug =True)
