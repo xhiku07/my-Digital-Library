@@ -110,10 +110,9 @@ def migrate():
     if os.path.exists('backup.sql'):
         conn = get_db()
         with open('backup.sql', 'r', encoding='utf-8', errors='ignore') as f:
-        script = f.read()
-    
-        inserts = '\n'.join(line for line in script.split('\n') if line.startswith('INSERT'))
-        conn.executescript(inserts)
+            script = f.read()
+            inserts = '\n'.join(line for line in script.split('\n') if line.startswith('INSERT'))
+            conn.executescript(inserts)
         conn.commit()
         conn.close()
         return jsonify({'success': True})
