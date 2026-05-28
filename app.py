@@ -105,23 +105,6 @@ def get_items():
     conn.close()
     return jsonify([dict(item) for item in items])
 
-@app.route('/migrate')
-def migrate():
-    if os.path.exists('backup.json'):
-        import json
-        conn = get_db()
-        with open('backup.json', 'r', encoding='utf-8') as f:
-            items = json.load(f)
-        for item in items:
-            conn.execute('''INSERT OR IGNORE INTO items 
-                (title, author, type, category, summary, link, doi, tags, created_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                (item['title'], item['author'], item['type'], item['category'],
-                 item['summary'], item['link'], item.get('doi',''), item['tags'], item['created_at']))
-        conn.commit()
-        conn.close()
-        return jsonify({'success': True})
-    return jsonify({'success': False, 'error': 'No backup.json found'})
 
 if __name__ == '__main__':
     app.run(debug =True)
