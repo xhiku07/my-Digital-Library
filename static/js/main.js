@@ -135,7 +135,6 @@ async function submitItem() {
 }
 
 
-
 async function smartFetch(value) {
     value = value.trim();
     if (!value) return;
@@ -157,6 +156,19 @@ async function smartFetch(value) {
     document.getElementById('type').value = 'Paper';
 }
 
+async function fetchISBN(isbn) {
+    isbn = isbn.trim().replace(/-/g, '');
+    if (!isbn) return;
+    if (isbn.length !== 10 && isbn.length !== 13) return;
+    if (!/^\d+$/.test(isbn)) return;
+    const r = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`);
+    const d = await r.json();
+    const book = d[`ISBN:${isbn}`];
+    if (!book) return;
+    document.getElementById('title').value = book.title || '';
+    document.getElementById('author').value = book.authors?.map(a => a.name).join(', ') || '';
+    document.getElementById('type').value = 'Book';
+}
 
 async function loadItems(category = 'all') {
     const response = await fetch('/items');
