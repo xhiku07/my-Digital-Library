@@ -107,16 +107,21 @@ def get_items():
 
 @app.route('/migrate')
 def migrate():
-    if os.path.exists('backup.sql'):
+    if os.path.exists('backup.json'):
+        import json
         conn = get_db()
-        with open('backup.sql', 'r', encoding='utf-8', errors='ignore') as f:
-            script = f.read()
-            inserts = '\n'.join(line for line in script.split('\n') if line.startswith('INSERT'))
-            conn.executescript(inserts)
+        with open('backup.json', 'r', encoding='utf-8') as f:
+            items = json.load(f)
+        for item in items:
+            conn.execute('''INSERT OR IGNORE INTO items 
+                (title, author, type, category, summary, link, doi, tags, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                (item['title'], item['author'], item['type'], item['category'],
+                 item['summary'], item['link'], item.get('doi',''), item['tags'], item['created_at']))
         conn.commit()
         conn.close()
         return jsonify({'success': True})
-    return jsonify({'success': False, 'error': 'No backup.sql found'})
+    return jsonify({'success': False, 'error': 'No backup.json found'})
 
 if __name__ == '__main__':
     app.run(debug =True)
