@@ -181,6 +181,7 @@ main {
 .card-year {
     color: var(--text-tertiary);
     font-size: 0.75rem;
+    font-weight: 600;
 }
 .card-summary {
     font-size: 0.85rem;
