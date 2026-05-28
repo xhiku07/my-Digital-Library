@@ -109,7 +109,7 @@ def get_items():
 def migrate():
     if os.path.exists('backup.sql'):
         conn = get_db()
-        with open('backup.sql', 'r') as f:
+        with open('backup.sql', 'r', encoding='utf-8', errors='ignore') as f:
             conn.executescript(f.read())
         conn.commit()
         conn.close()
