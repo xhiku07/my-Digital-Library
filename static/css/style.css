@@ -129,6 +129,7 @@ main {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
+    padding-top: 4.0rem; 
 }
 
 .card {
@@ -138,7 +139,7 @@ main {
     border: 1px solid var(--border);
     transition: all 0.2s;
     cursor: pointer;
-    height: 320px;
+    height: auto;
     overflow-y: auto;
 }
 
@@ -472,3 +473,22 @@ footer {
     background: #e07070;
     color: white;
 }
+
+
+
+.sprite {
+    width: 32px;
+    height: 32px;
+    pointer-events: none;
+}
+
+
+.card-sprite {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    z-index: 10;
+    width: 64px;
+    height: 64px;
+}
+

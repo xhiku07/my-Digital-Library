@@ -1,3 +1,21 @@
+
+const sprites = [
+    { id: 3, name: 'venusaur' },
+    { id: 6, name: 'charizard' },
+    { id: 9, name: 'blastoise' },
+    { id: 143, name: 'snorlax' }
+];
+
+function spriteURL(id) {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+}
+
+
+function shuffle(arr) {
+    return arr.sort(() => Math.random() - 0.5);
+}
+
+
 let isAuthed = false;
 
 function login() {
@@ -156,10 +174,10 @@ async function smartFetch(value) {
     value = value.trim();
     if (!value) return;
     
-    // Clean DOI if full URL pasted
+   
     let doi = value.replace('https://doi.org/', '').replace('http://doi.org/', '').replace('doi.org/', '');
     
-    // Only fetch if it looks like a DOI
+    
     if (!doi.startsWith('10.')) return;
     
     const response = await fetch(`https://api.crossref.org/works/${encodeURIComponent(doi)}`);
@@ -240,6 +258,20 @@ async function loadItems(category = 'all') {
             </div>`;
     });
 }
+
+
+const cards = Array.from(container.querySelectorAll('.card'));
+const randomCards = shuffle([...cards]).slice(0, 1);
+const cardSprites = [shuffle([...sprites])[0]];
+randomCards.forEach((card, i) => {
+    card.style.position = 'relative';
+    card.style.overflow = 'visible';
+    const img = document.createElement('img');
+    img.src = spriteURL(cardSprites[i].id);
+    img.className = 'sprite card-sprite';
+    card.appendChild(img);
+});
+
 }
 function filterItems(category) {
     loadItems(category);
