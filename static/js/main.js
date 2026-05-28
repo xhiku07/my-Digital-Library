@@ -1,3 +1,42 @@
+let isAuthed = false;
+
+function login() {
+    document.getElementById('login-modal').classList.remove('hidden');
+}
+
+function closeLogin() {
+    document.getElementById('login-modal').classList.add('hidden');
+}
+
+async function submitLogin() {
+    const pwd = document.getElementById('login-pass').value;
+    const r = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pwd })
+    });
+    const d = await r.json();
+    isAuthed = d.success;
+    if (!isAuthed) alert('Wrong password!');
+    else {
+        document.getElementById('add-btn').style.display = 'block';
+        document.getElementById('login-user').value = '';
+        document.getElementById('login-pass').value = '';
+        closeLogin();
+        loadItems();
+    }
+}
+
+async function checkAuth() {
+    const r = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: prompt('Password:') })
+    });
+    const d = await r.json();
+    if (!d.success) alert('Wrong password!');
+    return d.success;
+}
 
 function openAbout() {
     document.getElementById('about-modal').classList.remove('hidden');
@@ -7,7 +46,7 @@ function closeAbout() {
     document.getElementById('about-modal').classList.add('hidden');
 }
 
-// Close on backdrop click
+
 document.getElementById('about-modal').addEventListener('click', function(e) {
     if (e.target === this) closeAbout();
 });
@@ -67,7 +106,7 @@ function openEdit(id) {
 
 async function submitItem() {
     if (!document.getElementById('title').value) return alert('Please enter a title');
-    
+    if (!isAuthed) return;
     const editId = document.getElementById('modal').dataset.editId;
     const data = {
         title: document.getElementById('title').value,
@@ -90,10 +129,12 @@ async function submitItem() {
     const result = await response.json();
     if (result.success) {
         document.getElementById('modal').dataset.editId = '';
-        closeModal();d
+        closeModal();
         loadItems();
     }
 }
+
+
 
 async function smartFetch(value) {
     value = value.trim();
@@ -143,7 +184,7 @@ async function loadItems(category = 'all') {
                          ${item.tags.split(' ').filter(tag => tag.trim() !== '').map(tag => `<span class="tag">${tag}</span>`).join('')}
                     </div>
                     <div class="card-footer"> 
-                        <button class="edit-btn" onclick="event.stopPropagation(); openEdit(${item.id})">Edit</button>
+                        ${isAuthed ? `<button class="edit-btn" onclick="event.stopPropagation(); openEdit(${item.id})">Edit</button>` : ''}
                     </div>
                 </div>`;
         });
@@ -161,7 +202,10 @@ async function loadItems(category = 'all') {
                 ${item.tags.split(' ').filter(tag => tag.trim() !== '').map(tag => `<span class="tag">${tag}</span>`).join('')}
                 </div>
                 <div class="card-footer">
-                    <button class="edit-btn" onclick="event.stopPropagation(); openEdit(${item.id})">Edit</button>
+                    ${isAuthed ? `
+                        <button class="edit-btn" onclick="event.stopPropagation(); deleteItem(${item.id})">Delete</button>
+                        <button class="edit-btn" onclick="event.stopPropagation(); openEdit(${item.id})">Edit</button>
+                     ` : ''}
                 </div>
             </div>`;
     });

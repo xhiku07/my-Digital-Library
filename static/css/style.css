@@ -443,3 +443,27 @@ main {
     margin-bottom: 0.5rem;
 }
 
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+}
+
+.card-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.delete-btn {
+    background: #fff0f0;
+    color: #e07070;
+}
+
+.delete-btn:hover {
+    background: #e07070;
+    color: white;
+}

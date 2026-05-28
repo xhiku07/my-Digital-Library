@@ -3,10 +3,33 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 import anthropic
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
+from functools import wraps
 from database import init_db
 
 app = Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key')
+PASSWORD = os.getenv('LIBRARY_PASSWORD', 'yourpassword')
+
+def auth_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get('auth'):
+            return jsonify({'success': False, 'error': 'Unauthorized'}), 401
+        return f(*args, **kwargs)
+    return decorated
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.json.get('password') == PASSWORD:
+        session['auth'] = True
+        return jsonify({'success': True})
+    return jsonify({'success': False})
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return jsonify({'success': True})
 
 init_db()
 
@@ -28,6 +51,7 @@ def home():
     return render_template('index.html')
 
 @app.route('/add', methods=['POST'])
+@auth_required
 def add_item():
     data = request.json
     
@@ -53,6 +77,7 @@ def add_item():
     return jsonify({'success': True, 'summary': summary})
 
 @app.route('/update/<int:item_id>', methods=['POST'])
+@auth_required  
 def update_item(item_id):
     data = request.json
     conn = get_db()
@@ -60,6 +85,15 @@ def update_item(item_id):
            UPDATE items SET title=?, author=?, type=?, category=?, summary=?, link=?, doi=?, tags=?
     WHERE id=?
 ''', (data['title'], data['author'], data['type'], data['category'], data.get('summary', ''), data['link'], data.get('doi', ''), data['tags'], item_id))
+    conn.commit()
+    conn.close()
+    return jsonify({'success': True})
+
+@app.route('/delete/<int:item_id>', methods=['DELETE'])
+@auth_required
+def delete_item(item_id):
+    conn = get_db()
+    conn.execute('DELETE FROM items WHERE id=?', (item_id,))
     conn.commit()
     conn.close()
     return jsonify({'success': True})
