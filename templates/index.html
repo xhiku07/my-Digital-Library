@@ -6,24 +6,27 @@
     <title>Some Notes!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
-<div id="about-modal" class="modal hidden">
-    <div class="modal-box about-box">
-        <button class="close-about" onclick="closeAbout()">✕</button>
-        <div class="about-photo">
-            <img src="/static/photo.jpeg" id="about-img" alt="Photo" />
+<body>
+    <div id="about-modal" class="modal hidden">
+        <div class="modal-box about-box">
+            <div class="about-images">
+                <div class="about-photo">
+                    <img src="/static/photo.jpeg" id="about-img" alt="Photo" />
+                </div>
+                <div class="about-cat">
+                    <img src="https://media.tenor.com/zTERWK4_wu0AAAAj/png-kitty.gif" id="cat-gif" alt="cat working" />
+                </div>
+            </div>
+            <div class="about-text">
+                <h2>About Me</h2>
+                <p id="about-content">I'm Mithilesh, I think if you know me you might enjoy this project. I love books (more so collecting them). Happy Reading!</p>
+            </div>
+            <div class="modal-buttons">
+            <button onclick="closeAbout()">Close</button>
         </div>
-        <div class="about-cat">
-            <img src="https://tenor.com/view/png-kitty-cat-cute-pixel-cat-gif-14785618124212257517" id="cat-gif" alt="cat working" />
-        </div>
-        <div class="about-text">
-            <h2>About Me</h2>
-            <p id="about-content">I'm Mithilesh, I think if you know me you might enjoy this project. I love books (more so collecting them). Happy Reading! </p>
         </div>
     </div>
-</div>
 
-<body>
     <header>
         <h1>Some Notes!</h1>
         <nav>

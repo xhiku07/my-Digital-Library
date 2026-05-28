@@ -1,3 +1,18 @@
+
+function openAbout() {
+    document.getElementById('about-modal').classList.remove('hidden');
+}
+
+function closeAbout() {
+    document.getElementById('about-modal').classList.add('hidden');
+}
+
+// Close on backdrop click
+document.getElementById('about-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeAbout();
+});
+
+
 function openModal() {
     document.getElementById('modal').classList.remove('hidden');
 }
@@ -125,7 +140,7 @@ async function loadItems(category = 'all') {
                     <p class="card-author">${item.author}</p>
                     <p class="card-summary">${item.summary}</p>
                     <div class="card-tags">
-                        ${item.tags.split(' ').filter(tag => tag.trim() !== '').map(tag => `<span class="tag">${tag}</span>`).join('')}
+                         ${item.tags.split(' ').filter(tag => tag.trim() !== '').map(tag => `<span class="tag">${tag}</span>`).join('')}
                     </div>
                     <div class="card-footer"> 
                         <button class="edit-btn" onclick="event.stopPropagation(); openEdit(${item.id})">Edit</button>
@@ -143,7 +158,7 @@ async function loadItems(category = 'all') {
                 <p class="card-author">${item.author}</p>
                 <p class="card-summary">${item.summary}</p>
                 <div class="card-tags">
-                    ${item.tags.split(' ').filter(tag => tag.trim() !== '').map(tag => `<span class="tag">${tag}</span>`).join('')}
+                ${item.tags.split(' ').filter(tag => tag.trim() !== '').map(tag => `<span class="tag">${tag}</span>`).join('')}
                 </div>
                 <div class="card-footer">
                     <button class="edit-btn" onclick="event.stopPropagation(); openEdit(${item.id})">Edit</button>

@@ -406,3 +406,40 @@ main {
 .kanban-type-book { color: #b8960a; }
 .kankan-type-essay { color: var(--pink); }
 .kanban-type-blog { color: var(--green); }
+
+
+.about-box {
+    width: 520px;
+}
+
+.about-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.about-photo img  {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+}
+
+.about-cat img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border-radius: 12px;
+    display: block;
+    background: var(--bg-secondary);
+}
+
+.about-text {
+    margin-top: 1rem;
+}
+
+.about-text h2 {
+    margin-bottom: 0.5rem;
+}
+
