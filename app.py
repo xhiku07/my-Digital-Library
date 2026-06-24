@@ -47,6 +47,10 @@ def generate_summary(title, author):
 
 
 @app.route('/')
+def landing():
+    return render_template('landing.html')
+
+@app.route('/library')
 def home():
     return render_template('index.html')
 
