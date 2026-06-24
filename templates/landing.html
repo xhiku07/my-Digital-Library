@@ -17,48 +17,89 @@
             position: relative;
         }
 
-        /* BACKGROUND IMAGE */
         .bg {
             position: fixed;
             inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            background: linear-gradient(180deg,
+                #f5eef8 0%,
+                #fdf5ff 30%,
+                #f0f8ee 65%,
+                #d8ecb0 85%,
+                #c8e098 100%
+            );
             z-index: 0;
         }
 
-        /* Soft overlay to make text readable in sky area */
-        .bg::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                180deg,
-                rgba(255,248,245,0.35) 0%,
-                rgba(255,245,250,0.15) 40%,
-                transparent 65%
-            );
+        .clouds {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 40%;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        /* HERO */
+        .cloud {
+            position: absolute;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.65);
+            filter: blur(7px);
+        }
+
+        .c1 { width: 190px; height: 46px; top: 7%; left: 4%; animation: drift 20s ease-in-out infinite; }
+        .c2 { width: 280px; height: 56px; top: 14%; left: 28%; animation: drift 26s ease-in-out infinite 2s; }
+        .c3 { width: 140px; height: 38px; top: 5%; right: 9%; animation: drift 17s ease-in-out infinite 1s; }
+        .c4 { width: 220px; height: 48px; top: 20%; right: 22%; animation: drift 22s ease-in-out infinite 4s; }
+
+        @keyframes drift {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(28px); }
+        }
+
+        .hill-back {
+            position: fixed;
+            bottom: 100px;
+            left: -5%; width: 110%; height: 220px;
+            background: linear-gradient(180deg, #b0d888 0%, #88b858 100%);
+            border-radius: 50% 50% 0 0;
+            opacity: 0.55;
+            z-index: 2;
+        }
+
+        .hill-mid {
+            position: fixed;
+            bottom: 40px;
+            left: -5%; width: 110%; height: 200px;
+            background: linear-gradient(180deg, #c0e090 0%, #98c868 100%);
+            border-radius: 52% 48% 0 0;
+            z-index: 3;
+        }
+
+        .hill-front {
+            position: fixed;
+            bottom: 0;
+            left: -5%; width: 110%; height: 130px;
+            background: linear-gradient(180deg, #d0eaa8 0%, #b0d878 100%);
+            border-radius: 40% 44% 0 0;
+            z-index: 4;
+        }
+
         .hero {
             position: relative;
             z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding-top: clamp(3rem, 8vh, 6rem);
+            padding-top: clamp(3rem, 8vh, 5rem);
             text-align: center;
             pointer-events: none;
         }
 
         .hero-eyebrow {
-            font-size: 0.75rem;
-            letter-spacing: 0.25em;
+            font-size: 0.72rem;
+            letter-spacing: 0.24em;
             text-transform: uppercase;
-            color: #7a6060;
-            margin-bottom: 0.75rem;
+            color: #907878;
+            margin-bottom: 0.7rem;
             font-weight: 500;
         }
 
@@ -68,7 +109,7 @@
             color: #2a1e1e;
             line-height: 1;
             margin-bottom: 1rem;
-            text-shadow: 0 2px 20px rgba(255,240,240,0.8);
+            text-shadow: 0 2px 20px rgba(255,240,248,0.9);
         }
 
         .hero-title em {
@@ -83,13 +124,13 @@
             line-height: 1.7;
             margin-bottom: 2rem;
             font-weight: 300;
-            text-shadow: 0 1px 8px rgba(255,245,245,0.9);
+            text-shadow: 0 1px 8px rgba(255,248,252,0.9);
         }
 
         .hero-btn {
             display: inline-block;
             padding: 0.85rem 2.5rem;
-            background: rgba(192, 132, 176, 0.85);
+            background: rgba(192, 132, 176, 0.82);
             backdrop-filter: blur(8px);
             color: white;
             text-decoration: none;
@@ -99,7 +140,7 @@
             font-weight: 500;
             letter-spacing: 0.06em;
             transition: all 0.3s;
-            box-shadow: 0 4px 24px rgba(176, 112, 144, 0.35);
+            box-shadow: 0 4px 24px rgba(176, 112, 144, 0.32);
             pointer-events: all;
             border: 1px solid rgba(255,255,255,0.3);
             position: fixed;
@@ -107,25 +148,23 @@
             right: 2rem;
             z-index: 20;
         }
-        
+
         .hero-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 32px rgba(176, 112, 144, 0.45);
             background: rgba(176, 100, 155, 0.9);
         }
 
-        /* SVG FLOWER OVERLAY */
         .flower-overlay {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 45%;
-            z-index: 5;
+            height: 55%;
+            z-index: 8;
             pointer-events: none;
         }
 
-        /* SWAY ANIMATIONS */
         @keyframes sway-a {
             0%, 100% { transform: rotate(-3deg); }
             50%       { transform: rotate(3deg); }
@@ -148,16 +187,15 @@
         .f-c { animation: sway-c 3.4s ease-in-out infinite 0.8s; transform-origin: bottom center; }
         .f-d { animation: sway-d 2.9s ease-in-out infinite 1.2s; transform-origin: bottom center; }
 
-        /* FOOTER */
         .landing-footer {
             position: fixed;
             bottom: 1rem;
             width: 100%;
             text-align: center;
             z-index: 20;
-            color: white;
+            color: #6a5858;
             font-size: 0.75rem;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+            text-shadow: 0 1px 4px rgba(255,245,245,0.8);
         }
 
         .landing-footer img {
@@ -169,78 +207,89 @@
 </head>
 <body>
 
+<div class="bg"></div>
 
-<video class="bg" autoplay muted loop playsinline>
-    <source src="/static/meadow.mp4" type="video/mp4">
-</video>
+<div class="clouds">
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+    <div class="cloud c4"></div>
+</div>
+
+<div class="hill-back"></div>
+<div class="hill-mid"></div>
+<div class="hill-front"></div>
 
 <div class="hero">
     <p class="hero-eyebrow">A personal reading library</p>
     <h1 class="hero-title">Some <em>Notes!</em></h1>
     <p class="hero-subtitle">Papers, books, essays and blogs — curated with care.</p>
-    <a href="/library" class="hero-btn">Open the Library →</a>
 </div>
 
-<!-- SVG animated flowers overlaid on the image flowers -->
-<svg class="flower-overlay" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
+<a href="/library" class="hero-btn">Open the Library →</a>
 
-    <!-- Flower helper: daisy shape -->
+<svg class="flower-overlay" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <g id="daisy-white">
             <circle cx="0" cy="0" r="5" fill="#f5c542"/>
-            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.9"/>
-            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.9" transform="rotate(45)"/>
-            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.9" transform="rotate(90)"/>
-            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.9" transform="rotate(135)"/>
-            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.9" transform="rotate(180)"/>
-            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.9" transform="rotate(225)"/>
-            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.9" transform="rotate(270)"/>
-            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.9" transform="rotate(315)"/>
+            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.92"/>
+            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.92" transform="rotate(45)"/>
+            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.92" transform="rotate(90)"/>
+            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.92" transform="rotate(135)"/>
+            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.92" transform="rotate(180)"/>
+            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.92" transform="rotate(225)"/>
+            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.92" transform="rotate(270)"/>
+            <ellipse cx="0" cy="-11" rx="4" ry="7" fill="white" opacity="0.92" transform="rotate(315)"/>
         </g>
         <g id="daisy-pink">
             <circle cx="0" cy="0" r="4" fill="#f5c542"/>
-            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.9"/>
-            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.9" transform="rotate(45)"/>
-            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.9" transform="rotate(90)"/>
-            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.9" transform="rotate(135)"/>
-            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.9" transform="rotate(180)"/>
-            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.9" transform="rotate(225)"/>
-            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.9" transform="rotate(270)"/>
-            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.9" transform="rotate(315)"/>
+            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.92"/>
+            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.92" transform="rotate(45)"/>
+            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.92" transform="rotate(90)"/>
+            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.92" transform="rotate(135)"/>
+            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.92" transform="rotate(180)"/>
+            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.92" transform="rotate(225)"/>
+            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.92" transform="rotate(270)"/>
+            <ellipse cx="0" cy="-10" rx="3.5" ry="6.5" fill="#f0b8d0" opacity="0.92" transform="rotate(315)"/>
         </g>
     </defs>
 
     <!-- Left cluster -->
-    <g class="f-a"><line x1="80" y1="400" x2="85" y2="260" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-white" transform="translate(85,260) scale(1.3)"/></g>
-    <g class="f-c"><line x1="120" y1="400" x2="115" y2="290" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-pink" transform="translate(115,290) scale(1.1)"/></g>
-    <g class="f-b"><line x1="55" y1="400" x2="60" y2="310" stroke="#8aaa6a" stroke-width="1.2"/><use href="#daisy-white" transform="translate(60,310) scale(0.9)"/></g>
-    <g class="f-d"><line x1="160" y1="400" x2="155" y2="270" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-pink" transform="translate(155,270) scale(1.2)"/></g>
+    <g class="f-a"><line x1="60" y1="400" x2="64" y2="255" stroke="#6a9a4a" stroke-width="1.5"/><use href="#daisy-white" transform="translate(64,255) scale(1.3)"/></g>
+    <g class="f-c"><line x1="100" y1="400" x2="96" y2="285" stroke="#6a9a4a" stroke-width="1.4"/><use href="#daisy-pink" transform="translate(96,285) scale(1.1)"/></g>
+    <g class="f-b"><line x1="38" y1="400" x2="42" y2="305" stroke="#7aaa5a" stroke-width="1.2"/><use href="#daisy-white" transform="translate(42,305) scale(0.9)"/></g>
+    <g class="f-d"><line x1="145" y1="400" x2="141" y2="265" stroke="#6a9a4a" stroke-width="1.5"/><use href="#daisy-pink" transform="translate(141,265) scale(1.2)"/></g>
+    <g class="f-a"><line x1="185" y1="400" x2="188" y2="310" stroke="#7aaa5a" stroke-width="1.2"/><use href="#daisy-white" transform="translate(188,310) scale(0.85)"/></g>
 
     <!-- Left-center -->
-    <g class="f-b"><line x1="260" y1="400" x2="265" y2="240" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-white" transform="translate(265,240) scale(1.4)"/></g>
-    <g class="f-a"><line x1="310" y1="400" x2="305" y2="280" stroke="#8aaa6a" stroke-width="1.3"/><use href="#daisy-pink" transform="translate(305,280) scale(1.0)"/></g>
-    <g class="f-c"><line x1="220" y1="400" x2="225" y2="300" stroke="#7aaa5a" stroke-width="1.2"/><use href="#daisy-white" transform="translate(225,300) scale(0.95)"/></g>
+    <g class="f-b"><line x1="260" y1="400" x2="264" y2="238" stroke="#6a9a4a" stroke-width="1.5"/><use href="#daisy-white" transform="translate(264,238) scale(1.4)"/></g>
+    <g class="f-a"><line x1="305" y1="400" x2="301" y2="275" stroke="#7aaa5a" stroke-width="1.3"/><use href="#daisy-pink" transform="translate(301,275) scale(1.05)"/></g>
+    <g class="f-c"><line x1="220" y1="400" x2="224" y2="298" stroke="#6a9a4a" stroke-width="1.2"/><use href="#daisy-white" transform="translate(224,298) scale(0.95)"/></g>
+    <g class="f-d"><line x1="345" y1="400" x2="348" y2="318" stroke="#7aaa5a" stroke-width="1.1"/><use href="#daisy-pink" transform="translate(348,318) scale(0.8)"/></g>
 
     <!-- Center -->
-    <g class="f-d"><line x1="500" y1="400" x2="505" y2="230" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-white" transform="translate(505,230) scale(1.5)"/></g>
-    <g class="f-a"><line x1="560" y1="400" x2="555" y2="270" stroke="#8aaa6a" stroke-width="1.3"/><use href="#daisy-pink" transform="translate(555,270) scale(1.1)"/></g>
-    <g class="f-b"><line x1="620" y1="400" x2="625" y2="255" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-white" transform="translate(625,255) scale(1.2)"/></g>
-    <g class="f-c"><line x1="450" y1="400" x2="448" y2="295" stroke="#8aaa6a" stroke-width="1.2"/><use href="#daisy-pink" transform="translate(448,295) scale(0.9)"/></g>
+    <g class="f-d"><line x1="490" y1="400" x2="494" y2="225" stroke="#6a9a4a" stroke-width="1.5"/><use href="#daisy-white" transform="translate(494,225) scale(1.5)"/></g>
+    <g class="f-a"><line x1="548" y1="400" x2="544" y2="265" stroke="#7aaa5a" stroke-width="1.3"/><use href="#daisy-pink" transform="translate(544,265) scale(1.1)"/></g>
+    <g class="f-b"><line x1="608" y1="400" x2="612" y2="250" stroke="#6a9a4a" stroke-width="1.5"/><use href="#daisy-white" transform="translate(612,250) scale(1.2)"/></g>
+    <g class="f-c"><line x1="440" y1="400" x2="437" y2="292" stroke="#7aaa5a" stroke-width="1.2"/><use href="#daisy-pink" transform="translate(437,292) scale(0.9)"/></g>
+    <g class="f-d"><line x1="660" y1="400" x2="663" y2="315" stroke="#6a9a4a" stroke-width="1.1"/><use href="#daisy-white" transform="translate(663,315) scale(0.82)"/></g>
+    <g class="f-a"><line x1="720" y1="400" x2="716" y2="268" stroke="#7aaa5a" stroke-width="1.3"/><use href="#daisy-pink" transform="translate(716,268) scale(1.0)"/></g>
 
     <!-- Right-center -->
-    <g class="f-c"><line x1="820" y1="400" x2="825" y2="245" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-pink" transform="translate(825,245) scale(1.3)"/></g>
-    <g class="f-a"><line x1="880" y1="400" x2="875" y2="275" stroke="#8aaa6a" stroke-width="1.3"/><use href="#daisy-white" transform="translate(875,275) scale(1.1)"/></g>
-    <g class="f-d"><line x1="760" y1="400" x2="758" y2="300" stroke="#7aaa5a" stroke-width="1.2"/><use href="#daisy-white" transform="translate(758,300) scale(0.9)"/></g>
-    <g class="f-b"><line x1="940" y1="400" x2="945" y2="260" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-pink" transform="translate(945,260) scale(1.2)"/></g>
+    <g class="f-c"><line x1="810" y1="400" x2="814" y2="242" stroke="#6a9a4a" stroke-width="1.5"/><use href="#daisy-pink" transform="translate(814,242) scale(1.3)"/></g>
+    <g class="f-a"><line x1="868" y1="400" x2="864" y2="272" stroke="#7aaa5a" stroke-width="1.3"/><use href="#daisy-white" transform="translate(864,272) scale(1.1)"/></g>
+    <g class="f-d"><line x1="755" y1="400" x2="752" y2="298" stroke="#6a9a4a" stroke-width="1.2"/><use href="#daisy-white" transform="translate(752,298) scale(0.9)"/></g>
+    <g class="f-b"><line x1="928" y1="400" x2="932" y2="258" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-pink" transform="translate(932,258) scale(1.2)"/></g>
+    <g class="f-c"><line x1="975" y1="400" x2="978" y2="320" stroke="#6a9a4a" stroke-width="1.1"/><use href="#daisy-white" transform="translate(978,320) scale(0.8)"/></g>
 
     <!-- Right cluster -->
-    <g class="f-a"><line x1="1100" y1="400" x2="1105" y2="255" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-white" transform="translate(1105,255) scale(1.3)"/></g>
-    <g class="f-c"><line x1="1160" y1="400" x2="1155" y2="285" stroke="#8aaa6a" stroke-width="1.3"/><use href="#daisy-pink" transform="translate(1155,285) scale(1.1)"/></g>
-    <g class="f-d"><line x1="1050" y1="400" x2="1048" y2="305" stroke="#7aaa5a" stroke-width="1.2"/><use href="#daisy-white" transform="translate(1048,305) scale(0.9)"/></g>
-    <g class="f-b"><line x1="1250" y1="400" x2="1255" y2="265" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-pink" transform="translate(1255,265) scale(1.2)"/></g>
-    <g class="f-a"><line x1="1340" y1="400" x2="1338" y2="280" stroke="#8aaa6a" stroke-width="1.3"/><use href="#daisy-white" transform="translate(1338,280) scale(1.0)"/></g>
-    <g class="f-c"><line x1="1390" y1="400" x2="1392" y2="310" stroke="#7aaa5a" stroke-width="1.2"/><use href="#daisy-pink" transform="translate(1392,310) scale(0.85)"/></g>
-
+    <g class="f-a"><line x1="1080" y1="400" x2="1084" y2="252" stroke="#6a9a4a" stroke-width="1.5"/><use href="#daisy-white" transform="translate(1084,252) scale(1.3)"/></g>
+    <g class="f-c"><line x1="1138" y1="400" x2="1134" y2="282" stroke="#7aaa5a" stroke-width="1.3"/><use href="#daisy-pink" transform="translate(1134,282) scale(1.1)"/></g>
+    <g class="f-d"><line x1="1030" y1="400" x2="1027" y2="302" stroke="#6a9a4a" stroke-width="1.2"/><use href="#daisy-white" transform="translate(1027,302) scale(0.9)"/></g>
+    <g class="f-b"><line x1="1230" y1="400" x2="1234" y2="262" stroke="#7aaa5a" stroke-width="1.5"/><use href="#daisy-pink" transform="translate(1234,262) scale(1.2)"/></g>
+    <g class="f-a"><line x1="1318" y1="400" x2="1315" y2="278" stroke="#6a9a4a" stroke-width="1.3"/><use href="#daisy-white" transform="translate(1315,278) scale(1.0)"/></g>
+    <g class="f-c"><line x1="1375" y1="400" x2="1378" y2="308" stroke="#7aaa5a" stroke-width="1.2"/><use href="#daisy-pink" transform="translate(1378,308) scale(0.85)"/></g>
+    <g class="f-d"><line x1="1415" y1="400" x2="1412" y2="325" stroke="#6a9a4a" stroke-width="1.1"/><use href="#daisy-white" transform="translate(1412,325) scale(0.78)"/></g>
 </svg>
 
 <div class="landing-footer">
